@@ -30,9 +30,9 @@ services:
         #     PL_DATA_ATTACHMENTS_DIR: /attachments
         environment:
             - PL_ASSETS_DIR=/assets
-        expose:
-            - 3000
-            - 4000
+        ports:
+            - 3000:3001
+            - 4000:4001
         volumes:
             - attachments:/attachments
             - logs:/logs
@@ -51,29 +51,7 @@ services:
             - PL_ASSETS_DIR=/assets
         command: ["build"]
         restart: on-failure
-    nginx:
-        env_file: .env
-        environment:
-            - API_KEY=${PL_AMPLIFY_API_KEY}
-            - AMPLIFY_IMAGENAME=${PL_HOSTNAME}
-        build:
-            context: ./nginx
-            dockerfile: Dockerfile
-        depends_on:
-            - server
-        restart: always
-        volumes:
-            - pwa:/pwa
-            # - logs:/var/log
-            - /var/www/certbot:/certbot
-            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-            - ${PL_SSL_CERT}:/ssl/cert
-            - ${PL_SSL_KEY}:/ssl/key
-            - /etc/letsencrypt/options-ssl-nginx.conf:/ssl/ssl.conf
-            - /etc/letsencrypt/ssl-dhparams.pem:/ssl/dhparams.pem
-        ports:
-            - 80:80
-            - 443:443
+    
 volumes:
     data:
     attachments:
