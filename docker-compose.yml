@@ -21,7 +21,7 @@ services:
             dockerfile: Dockerfile-server
         # depends_on:
         #     - mongodb
-        env_file: .env
+        #env_file: .env
         # environment:
         #     PL_DATA_MONGODB_HOST: mongodb
         #     PL_DATA_MONGODB_PROTOCOL: mongodb
@@ -40,7 +40,7 @@ services:
         restart: unless-stopped
     pwa:
         image: padloc/pwa
-        env_file: .env
+        #env_file: .env
         build:
             context: .
             dockerfile: Dockerfile-pwa
