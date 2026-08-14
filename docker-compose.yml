@@ -30,8 +30,8 @@ services:
     #environment:
     #  - PL_ASSETS_DIR=/assets
     ports:
-      - 3000:3000
-      - 4000:4000
+      - 3001:3000
+      - 4001:4000
     volumes:
       - attachments:/attachments
       - logs:/logs
