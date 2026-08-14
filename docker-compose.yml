@@ -1,19 +1,17 @@
 version: "3.7"
 services:
-    # mongodb:
-    #     image: mongo
-    #     container_name: mongodb
-    #     restart: always
+     mongodb:
+         image: mongo
+         container_name: mongodb
+         restart: always
     #     env_file: .env
-    #     volumes:
-    #         - data:/data/db
-    #     expose:
-    #         - 27017
-    #     # ports:
-    #     #     - 27023:27017
-    #     environment:
-    #         MONGO_INITDB_ROOT_USERNAME: ${PL_DATA_MONGODB_USERNAME}
-    #         MONGO_INITDB_ROOT_PASSWORD: ${PL_DATA_MONGODB_PASSWORD}
+         volumes:
+             - data:/data/db
+         ports:
+             - 27017:27017
+         environment:
+             MONGO_INITDB_ROOT_USERNAME: ${PL_DATA_MONGODB_USERNAME}
+             MONGO_INITDB_ROOT_PASSWORD: ${PL_DATA_MONGODB_PASSWORD}
     server:
         image: padloc/server
         build:
@@ -31,8 +29,8 @@ services:
         environment:
             - PL_ASSETS_DIR=/assets
         ports:
-            - 3000:3001
-            - 4000:4001
+            - 3000:3000
+            - 4000:4000
         volumes:
             - attachments:/attachments
             - logs:/logs
