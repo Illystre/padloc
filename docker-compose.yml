@@ -1,22 +1,23 @@
-version: "3.7"
+
 services:
-     mongodb:
-         image: mongo
-         container_name: mongodb
-         restart: always
-    #     env_file: .env
-         volumes:
-             - data:/data/db
-         ports:
-             - 27017:27017
-         environment:
-             MONGO_INITDB_ROOT_USERNAME: ${PL_DATA_MONGODB_USERNAME}
-             MONGO_INITDB_ROOT_PASSWORD: ${PL_DATA_MONGODB_PASSWORD}
-    server:
-        image: padloc/server
-        build:
-            context: .
-            dockerfile: Dockerfile-server
+  mongodb:
+     image: mongo
+     container_name: mongodb
+     restart: always
+       #env_file: .env
+     volumes:
+       - data:/data/db
+     ports:
+       - 27017:27017
+     environment:
+       MONGO_INITDB_ROOT_USERNAME: ${PL_DATA_MONGODB_USERNAME}
+       MONGO_INITDB_ROOT_PASSWORD: ${PL_DATA_MONGODB_PASSWORD}
+  
+  server:
+     image: padloc/server
+     build:
+     context: .
+     dockerfile: Dockerfile-server
         # depends_on:
         #     - mongodb
         #env_file: .env
@@ -26,29 +27,29 @@ services:
         #     PL_DATA_MONGODB_PORT: 27017
         #     PL_DATA_ATTACHMENTS_BACKEND: fs
         #     PL_DATA_ATTACHMENTS_DIR: /attachments
-        environment:
-            - PL_ASSETS_DIR=/assets
-        ports:
-            - 3000:3000
-            - 4000:4000
-        volumes:
-            - attachments:/attachments
-            - logs:/logs
-            - ${PL_ASSETS_DIR:-./assets}:/assets
-        restart: unless-stopped
-    pwa:
-        image: padloc/pwa
-        #env_file: .env
-        build:
-            context: .
-            dockerfile: Dockerfile-pwa
-        volumes:
-            - pwa:/pwa
-            - ${PL_ASSETS_DIR:-./assets}:/assets
-        environment:
-            - PL_ASSETS_DIR=/assets
-        command: ["build"]
-        restart: on-failure
+     environment:
+        - PL_ASSETS_DIR=/assets
+     ports:
+        - 3000:3000
+        - 4000:4000
+     volumes:
+        - attachments:/attachments
+        - logs:/logs
+        - ${PL_ASSETS_DIR:-./assets}:/assets
+     restart: unless-stopped
+  pwa:
+    image: padloc/pwa
+    #env_file: .env
+    build:
+    context: .
+    dockerfile: Dockerfile-pwa
+    volumes:
+      - pwa:/pwa
+      - ${PL_ASSETS_DIR:-./assets}:/assets
+    environment:
+      - PL_ASSETS_DIR=/assets
+    command: ["build"]
+    restart: on-failure
     
 volumes:
     data:
