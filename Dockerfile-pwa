@@ -18,7 +18,7 @@ COPY packages/core/package*.json ./packages/core/
 COPY packages/locale/package*.json ./packages/locale/
 
 # Install dependencies and bootstrap packages
-RUN npm install -g npm@12.0.2
+RUN npm install
 RUN npm ci --unsafe-perm
 # Now copy over source files and assets
 COPY packages/pwa/src ./packages/pwa/src
