@@ -16,8 +16,8 @@ services:
   server:
     image: padloc/server
     build:
-    context: .
-    dockerfile: Dockerfile-server
+      context: .
+      dockerfile: Dockerfile-server
     # depends_on:
     #   - mongodb
     #env_file: .env
@@ -41,8 +41,8 @@ services:
     image: padloc/pwa
     #env_file: .env
     build:
-    context: .
-    dockerfile: Dockerfile-pwa
+      context: .
+      dockerfile: Dockerfile-pwa
     volumes:
       - pwa:/pwa
       - assets:/assets
