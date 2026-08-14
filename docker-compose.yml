@@ -27,8 +27,8 @@ services:
     #  PL_DATA_MONGODB_PORT: 27017
     #  PL_DATA_ATTACHMENTS_BACKEND: fs
     #  PL_DATA_ATTACHMENTS_DIR: /attachments
-    environment:
-      - PL_ASSETS_DIR=/assets
+    #environment:
+    #  - PL_ASSETS_DIR=/assets
     ports:
       - 3000:3000
       - 4000:4000
