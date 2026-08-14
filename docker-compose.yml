@@ -1,42 +1,42 @@
 
 services:
   mongodb:
-     image: mongo
-     container_name: mongodb
-     restart: always
-       #env_file: .env
-     volumes:
-       - data:/data/db
-     ports:
-       - 27017:27017
-     environment:
-       MONGO_INITDB_ROOT_USERNAME: ${PL_DATA_MONGODB_USERNAME}
-       MONGO_INITDB_ROOT_PASSWORD: ${PL_DATA_MONGODB_PASSWORD}
+    image: mongo
+    container_name: mongodb
+    restart: always
+    #env_file: .env
+    volumes:
+      - data:/data
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${PL_DATA_MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${PL_DATA_MONGODB_PASSWORD}
   
   server:
-     image: padloc/server
-     build:
-     context: .
-     dockerfile: Dockerfile-server
-        # depends_on:
-        #     - mongodb
-        #env_file: .env
-        # environment:
-        #     PL_DATA_MONGODB_HOST: mongodb
-        #     PL_DATA_MONGODB_PROTOCOL: mongodb
-        #     PL_DATA_MONGODB_PORT: 27017
-        #     PL_DATA_ATTACHMENTS_BACKEND: fs
-        #     PL_DATA_ATTACHMENTS_DIR: /attachments
-     environment:
-        - PL_ASSETS_DIR=/assets
-     ports:
-        - 3000:3000
-        - 4000:4000
-     volumes:
-        - attachments:/attachments
-        - logs:/logs
-        - ${PL_ASSETS_DIR:-./assets}:/assets
-     restart: unless-stopped
+    image: padloc/server
+    build:
+    context: .
+    dockerfile: Dockerfile-server
+    # depends_on:
+    #   - mongodb
+    #env_file: .env
+    #environment:
+    #  PL_DATA_MONGODB_HOST: mongodb
+    #  PL_DATA_MONGODB_PROTOCOL: mongodb
+    #  PL_DATA_MONGODB_PORT: 27017
+    #  PL_DATA_ATTACHMENTS_BACKEND: fs
+    #  PL_DATA_ATTACHMENTS_DIR: /attachments
+    environment:
+      - PL_ASSETS_DIR=/assets
+    ports:
+      - 3000:3000
+      - 4000:4000
+    volumes:
+      - attachments:/attachments
+      - logs:/logs
+      - assets:/assets
+    restart: unless-stopped
   pwa:
     image: padloc/pwa
     #env_file: .env
@@ -45,14 +45,15 @@ services:
     dockerfile: Dockerfile-pwa
     volumes:
       - pwa:/pwa
-      - ${PL_ASSETS_DIR:-./assets}:/assets
-    environment:
-      - PL_ASSETS_DIR=/assets
+      - assets:/assets
+    #environment:
+    #  - PL_ASSETS_DIR=/assets
     command: ["build"]
     restart: on-failure
     
 volumes:
-    data:
-    attachments:
-    pwa:
-    logs:
+  data:
+  attachments:
+  pwa:
+  logs:
+  assets:
